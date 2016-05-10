@@ -1,8 +1,8 @@
 Package.describe({
-  name: 'publication-builder',
+  name: 'cinn:publication-builder',
   version: '0.0.1',
-  summary: '',
-  git: '',
+  summary: 'Simple query generator for meteor apps',
+  git: 'https://github.com/cinn-labs/publication-builder',
   documentation: 'README.md'
 });
 
