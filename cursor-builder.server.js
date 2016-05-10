@@ -71,7 +71,6 @@ class CursorBuilder {
     const { collection } = this.collectionHandler;
     const options = _.merge(this.optionsStack, { fields: this.fieldsStack, sort: this.sortsStack });
     const query = this.selectorsStack;
-    console.log(query, options);
     return collection.find(query, options);
   }
 }
