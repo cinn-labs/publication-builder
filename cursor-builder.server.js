@@ -76,6 +76,7 @@ class CursorBuilder {
 
   sorts(params) { return this.mergeToStackAndReturnSelf(this.sortsStack, params); }
   options(params) { return this.mergeToStackAndReturnSelf(this.optionsStack, params); }
+  forceTrash() { return this.mergeToStackAndReturnSelf(this.optionsStack, { forceTrash: true }); }
 
   cursor() {
     const { collection } = this.collectionHandler;
