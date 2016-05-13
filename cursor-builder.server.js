@@ -18,6 +18,7 @@ class CursorBuilder {
     this.sorts = this.sorts.bind(this);
     this.options = this.options.bind(this);
     this.cursor = this.cursor.bind(this);
+    this.loads = this.loads.bind(this);
   }
 
   mergeToStackAndReturnSelf(stack, params) {
@@ -56,6 +57,11 @@ class CursorBuilder {
   query(name, ...params) {
     const newSelector = this.getNewSelector(name, params);
     return this.mergeToStackAndReturnSelf(this.selectorsStack, newSelector);
+  }
+
+  loads(name, ...params) {
+    const { dependencies } = this.collectionHandler;
+    return dependencies[name](this.cursor(), ...params);
   }
 
   fields(...params) {

@@ -6,10 +6,11 @@ class CursorBuilderGenerator {
     // Vars
     this.collection = params.collection;
     this.filters = params.filters || {};
+    this.dependencies = params.dependencies || {};
     // Binds
     this.build = this.build.bind(this);
     this.setBasicFilters = this.setBasicFilters.bind(this);
-    this.setBasicFilters = this.setBasicFilters.bind(this);
+    this.checkFiltersStack = this.checkFiltersStack.bind(this);
     // Preparations
     this.setBasicFilters();
   }
