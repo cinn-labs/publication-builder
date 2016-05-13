@@ -60,7 +60,11 @@ class CursorBuilder {
   }
 
   loads(name, ...params) {
-    const { dependencies } = this.collectionHandler;
+    const { dependencies, collection } = this.collectionHandler;
+    if(!_.has(dependencies, name)) {
+      console.warn(`[PUBLICATION BUILDER] ${name} dependency was not found for collection ${collection._name}.`);
+      return false;
+    }
     return dependencies[name](this.cursor(), ...params);
   }
 
