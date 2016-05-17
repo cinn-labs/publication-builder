@@ -1,9 +1,10 @@
 import _ from 'lodash';
 
 class CursorBuilder {
-  constructor(collectionHandler) {
+  constructor(collectionHandler, publicationScope) {
     // Vars
     this.collectionHandler = collectionHandler;
+    this.publicationScope = publicationScope;
     this.selectorsStack = {};
     this.fieldsStack = {};
     this.sortsStack = {};
@@ -51,7 +52,7 @@ class CursorBuilder {
       console.warn(`[PUBLICATION BUILDER] ${name} query was not found for collection ${collection._name}.`);
       return {};
     }
-    return filters[name](...params);
+    return filters[name].bind(this.publicationScope)(...params);
   }
 
   query(name, ...params) {
@@ -65,7 +66,7 @@ class CursorBuilder {
       console.warn(`[PUBLICATION BUILDER] ${name} dependency was not found for collection ${collection._name}.`);
       return false;
     }
-    return dependencies[name](this.cursor(), ...params);
+    return dependencies[name].bind(this.publicationScope)(this.cursor(), ...params);
   }
 
   fields(...params) {

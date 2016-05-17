@@ -32,8 +32,8 @@ class CursorBuilderGenerator {
     this.filters['in'] = (ids) => ({ _id: { $in: ids } });
   }
 
-  build() {
-    return new CursorBuilder(this);
+  build(publicationScope) {
+    return new CursorBuilder(this, publicationScope);
   }
 }
 
