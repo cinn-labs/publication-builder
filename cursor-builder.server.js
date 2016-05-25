@@ -9,6 +9,8 @@ class CursorBuilder {
     this.fieldsStack = {};
     this.sortsStack = {};
     this.optionsStack = {};
+    this.limitValue = false;
+    this.skipValue = false;
     // Binds
     this.mergeToStackAndReturnSelf = this.mergeToStackAndReturnSelf.bind(this);
     this.isIdShortcodeFilter = this.isIdShortcodeFilter.bind(this);
@@ -24,6 +26,11 @@ class CursorBuilder {
 
   mergeToStackAndReturnSelf(stack, params) {
     _.merge(stack, params);
+    return this;
+  }
+
+  setVariableAndReturnSelf(name, value) {
+    this[name] = value;
     return this;
   }
 
@@ -75,6 +82,8 @@ class CursorBuilder {
     return this.mergeToStackAndReturnSelf(this.fieldsStack, newFields);
   }
 
+  skip(value) { return this.setVariableAndReturnSelf('skipValue', value); }
+  limit(value) { return this.setVariableAndReturnSelf('limitValue', value); }
   sorts(params) { return this.mergeToStackAndReturnSelf(this.sortsStack, params); }
   options(params) { return this.mergeToStackAndReturnSelf(this.optionsStack, params); }
   forceTrash() { return this.mergeToStackAndReturnSelf(this.optionsStack, { forceTrash: true }); }
@@ -82,6 +91,9 @@ class CursorBuilder {
   cursor() {
     const { collection } = this.collectionHandler;
     const options = _.merge(this.optionsStack, { fields: this.fieldsStack, sort: this.sortsStack });
+    if(!!this.limitValue) options.limit = this.limitValue;
+    if(!!this.skipValue) options.skip = this.skipValue;
+    console.log(1, options);
     const query = this.selectorsStack;
     return collection.find(query, options);
   }
