@@ -93,7 +93,6 @@ class CursorBuilder {
     const options = _.merge(this.optionsStack, { fields: this.fieldsStack, sort: this.sortsStack });
     if(!!this.limitValue) options.limit = this.limitValue;
     if(!!this.skipValue) options.skip = this.skipValue;
-    console.log(1, options);
     const query = this.selectorsStack;
     return collection.find(query, options);
   }
